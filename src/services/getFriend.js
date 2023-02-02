@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 import { db } from "../firebase"
 
 const getFriend = async (currentUser) => {

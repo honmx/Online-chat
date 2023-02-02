@@ -1,8 +1,8 @@
-import { Box, Button, Typography } from "@mui/material";
 import React from "react"
+import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const NotFoundPage = (props) => {
+const NotFoundPage = () => {
 
   const navigate = useNavigate();
 
