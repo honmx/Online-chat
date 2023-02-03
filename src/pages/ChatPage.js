@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Container, Paper} from "@mui/material";
 import ChatHeader from "../components/ChatHeader";
 import Messages from "../components/Messages";
@@ -15,7 +15,6 @@ const ChatPage = () => {
   const dispatch = useDispatch();
 
   const currentUser = getCurrentUser();
-  const messages = useSelector(state => state.chat.messages);
 
   useEffect(() => {
     let unsub;
@@ -46,7 +45,7 @@ const ChatPage = () => {
         }}
       >
         <ChatHeader />
-        <Messages messages={messages} />
+        <Messages />
         <InputMessageField />
       </Paper>
     </Container>

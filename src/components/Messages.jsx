@@ -1,16 +1,18 @@
 import React, { useEffect, useRef } from "react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/material";
 import Message from "../components/Message";
 import { setMessages } from "../store/slices/chatSlice";
 import { collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import { db } from "../firebase";
 
-const Messages = ({ messages }) => {
+const Messages = () => {
 
   const dispatch = useDispatch();
 
   const chatFieldRef = useRef();
+
+  const messages = useSelector(state => state.chat.messages);
 
   useEffect(() => {
     if (chatFieldRef.current) chatFieldRef.current.scrollIntoView({ behavior: "smooth" });

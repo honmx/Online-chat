@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material"
 import { setCurrentUser } from "../helpers/setCurrentUser";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth } from "../firebase";
 import { db } from "../firebase";
 
@@ -14,22 +14,17 @@ const LoginPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(({ user }) => {
-        setCurrentUser({ ...user });
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-        updateDoc(doc(db, "users", user.email), {online: true})
-          .then(() => navigate("/chat"));
-      })
-      .catch((error) => {
-        // todo
-        //  [] - handle all cases of error during auth
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-      });
+    await updateDoc(doc(db, "users", user.email), {online: true})
+    
+    const currentUserFromDatabase = await getDoc(doc(db, "users", user.email));
+    setCurrentUser(currentUserFromDatabase.data());
+    
+    navigate("/chat");
   }
 
   return (

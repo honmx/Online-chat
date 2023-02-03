@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Avatar, Badge, Box, Button, Typography } from "@mui/material";
 import { convertFromMs } from "../helpers/convertFromMs";
 import { useSelector } from "react-redux";
 import { doc, Timestamp, updateDoc } from "firebase/firestore";
@@ -16,6 +16,9 @@ const ChatHeader = () => {
   const currentUser = getCurrentUser();
   const friend = useSelector(state => state.users.friend);
 
+  console.log(currentUser);
+  console.log(friend);
+
   const signOut = () => {
     localStorage.setItem("user", null);
     const date = Timestamp.now();
@@ -28,13 +31,25 @@ const ChatHeader = () => {
       display: "flex",
       p: 2
     }}>
-      <Avatar sx={{ width: 60, height: 60 }} />
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography>Username</Typography>
+      <Badge 
+        badgeContent={""}
+        color={"success"}
+        invisible={!friend?.online}
+        overlap="circular"
+        anchorOrigin={{
+          horizontal: "right",
+          vertical: "bottom"
+        }}
+        variant=""
+      >
+        <Avatar sx={{ width: 60, height: 60 }} />
+      </Badge>
+      <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
+        <Typography>{friend?.username}</Typography>
         <Typography>
           {
             friend?.lastSeen &&
-            (friend?.online ? "online" : "last seen " + convertFromMs(friend?.lastSeen))
+            (!friend?.online && "last seen " + convertFromMs(friend?.lastSeen))
           }
         </Typography>
       </Box>
