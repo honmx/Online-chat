@@ -12,7 +12,9 @@ const InputMessageField = () => {
 
   const currentUser = getCurrentUser();
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
+
     setValue("");
     
     const date = Timestamp.now();
@@ -24,18 +26,23 @@ const InputMessageField = () => {
   }
 
   return (
-    <Box sx={{display: "flex"}}>
+    <Box>
+      <form onSubmit={handleClick} style={{display: "flex", alignItems: "center"}}>
       <TextField 
         value={value}
         onChange={(e) => setValue(e.target.value)}
         sx={{
           flex: "1 1 0",
-          m: 1
+          m: 1,
+          ".MuiOutlinedInput-root": {
+            borderRadius: 4
+          }
         }}
       />
-      <IconButton onClick={handleClick}>
+      <IconButton type="submit" sx={{height: 50, width: 50}}>
         <SendIcon />
       </IconButton>
+      </form>
     </Box>
   )
 };

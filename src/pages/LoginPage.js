@@ -7,7 +7,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth } from "../firebase";
 import { db } from "../firebase";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
 
   const navigate = useNavigate();
 
@@ -19,11 +19,11 @@ const LoginPage = (props) => {
 
     const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-    await updateDoc(doc(db, "users", user.email), {online: true})
-    
+    await updateDoc(doc(db, "users", user.email), { online: true })
+
     const currentUserFromDatabase = await getDoc(doc(db, "users", user.email));
     setCurrentUser(currentUserFromDatabase.data());
-    
+
     navigate("/chat");
   }
 
@@ -40,18 +40,38 @@ const LoginPage = (props) => {
       <Paper
         elevation={10}
         sx={{
-          p: 3
+          p: 3,
+          borderRadius: 10
         }}
       >
-        <Typography>Let's log in to your account</Typography>
+        <Typography fontSize={30} fontWeight={100}>Let's log in to your account</Typography>
         <form onSubmit={login}>
-          <Box>
-            <TextField placeholder="Enter your login" value={email} onChange={(e) => setEmail(e.target.value)}></TextField>
+          <Box sx={{ mt: 4 }}>
+            <TextField 
+              fullWidth
+              placeholder="Enter your login"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Box>
-          <Box>
-            <TextField placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)}></TextField>
+          <Box sx={{ mt: 1 }}>
+            <TextField 
+              fullWidth
+              placeholder="Enter your password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Box>
-          <Button type="submit">Log in</Button>
+          <Box textAlign="center">
+            <Button 
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3 }}
+            >
+              Log in
+            </Button>
+          </Box>
         </form>
       </Paper>
     </Container>

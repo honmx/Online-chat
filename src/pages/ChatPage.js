@@ -31,7 +31,7 @@ const ChatPage = () => {
       })
 
     return unsub;
-  }, []);
+  }, [dispatch, currentUser]);
 
   return (
     <Container maxWidth="md" sx={{ height: "100vh", pt: 2, pb: 2 }}>

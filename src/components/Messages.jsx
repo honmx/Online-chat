@@ -30,10 +30,10 @@ const Messages = () => {
     });
 
     return unsub;
-  }, []);
+  }, [dispatch]);
 
   return (
-    <Stack spacing={1} sx={{ border: 1, flex: "1 1 0", overflowY: "auto" }}>
+    <Stack spacing={1} sx={{ flex: "1 1 0", overflowY: "auto", p: 0.5 }}>
       {messages.map(message => <Message key={message.timestamp} message={message} />)}
       <div ref={chatFieldRef} />
     </Stack>
